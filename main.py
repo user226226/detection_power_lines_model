@@ -24,3 +24,18 @@ class LAPDetector:
         result = self.model(image)
 
         return result.render()[0]
+
+
+class GladeSegment:
+    """ Unet + MobileNet segmentation """
+
+    def __init__(self, model_path):
+        self.model = torch.hub.load(None, path=model_path, force_reload=True)
+
+    def predict(self, image: np.ndarray):
+        image = torch.ToTensor(image)
+
+        result = self.model(image)
+        result = result.numpy()
+
+        return result
